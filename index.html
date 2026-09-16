@@ -283,43 +283,63 @@ td .sub { color: var(--muted); font-size: 14px; }
 
 /* ======================= Мобильная версия ======================= */
 @media (max-width: 640px) {
-  .main { padding: 14px 12px 48px; }
+  .main { padding: 12px 10px 48px; }
 
-  /* Шапка в две строки: бренд + действия, вкладки — прокручиваемой лентой ниже */
-  .topbar { flex-wrap: wrap; height: auto; min-height: 0; padding: 8px 12px; gap: 10px 8px; position: sticky; }
+  /* Шапка: логотип + компактные действия, вкладки лентой снизу */
+  .topbar { flex-wrap: wrap; height: auto; min-height: 0; padding: 8px 10px; gap: 8px; position: sticky; }
   .topbar .spacer { display: none; }
-  .topbar .conn { order: 5; gap: 5px; }
-  .topbar .conn .conn-sub { display: none; }
-  .topbar .conn .conn-text { font-size: 12px; }
-  .brand { margin-right: auto; --logo-h: 19px; }
-  .tabs { order: 10; width: 100%; margin: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .tab { white-space: nowrap; flex: 0 0 auto; }
-  .topbar .btn-primary { padding: 8px 12px; }
+  .brand { --logo-h: 17px; margin-right: auto; gap: 7px; }
+  .brand .crm { font-size: 13px; padding-left: 7px; letter-spacing: 1px; }
+  .topbar .btn { padding: 7px 10px; font-size: 12px; }
+  .topbar .btn-users { padding: 7px 9px; }
+  .userchip { gap: 5px; }
   .userchip .uc-name { display: none; }
-  .logout { padding: 6px 9px; }
+  .userchip .uc-ava { width: 26px; height: 26px; }
+  .logout { padding: 5px 8px; font-size: 11px; }
+  .topbar .conn { order: 6; width: 100%; gap: 6px; }
+  .topbar .conn .conn-text { font-size: 11px; flex-direction: row; gap: 6px; }
+  .topbar .conn .conn-sub { display: inline; }
+  .tabs { order: 10; width: 100%; margin: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 2px; }
+  .tab { white-space: nowrap; flex: 0 0 auto; padding: 7px 11px; font-size: 13px; }
 
-  /* Воронка: одна колонка на экран с «подглядыванием» соседней, свайп по горизонтали */
+  /* Воронка: колонка на экран, свайп по горизонтали */
   .col { flex-basis: 84vw; max-width: 340px; max-height: none; }
   .board { gap: 10px; }
 
-  /* Таблица подрядчиков → карточки */
+  /* Фильтры */
   .toolbar { gap: 8px; }
   .toolbar .search { flex-basis: 100%; }
-  .toolbar select.input { flex: 1 1 45%; min-width: 0; }
-  .toolbar .btn-primary { margin-left: 0 !important; flex: 1 1 100%; }
+  .toolbar select.input { flex: 1 1 47%; min-width: 0; font-size: 14px; padding: 8px 10px; }
+  .toolbar .top-toggle { flex-basis: 100%; font-size: 13px; }
+  .toolbar .btn { flex: 1 1 47%; margin-left: 0 !important; }
+
+  /* Подрядчики: строка таблицы → карточка (без подписей-меток) */
   .panel { overflow-x: visible; }
   .panel > table { min-width: 0; }
   .panel thead { display: none; }
-  .panel table, .panel tbody, .panel tr, .panel td { display: block; width: 100%; }
-  .panel tr { border-bottom: 1px solid var(--line); padding: 10px 4px; }
+  .panel table, .panel tbody { display: block; width: 100%; }
   .panel tbody tr:hover { background: transparent; }
-  .panel td { border: 0; padding: 4px 14px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
-  .panel td::before { content: attr(data-label); color: var(--muted); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; flex: 0 0 82px; }
-  .panel td[data-label=""]::before { content: none; }
-  .panel td[data-label=""] { justify-content: flex-end; padding-top: 8px; }
-  .panel td .sub { text-align: right; }
-  .panel td[data-label="Рейтинг"] .rate { flex: 1; justify-content: flex-end; }
-  .panel td[data-label="Контакты"], .panel td[data-label="Руководитель"] { text-align: right; word-break: break-word; }
+  .panel tr {
+    display: grid; width: 100%;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 2px 10px; align-items: start;
+    padding: 14px 14px 12px; border-bottom: 1px solid var(--line);
+  }
+  .panel td { display: block; border: 0; padding: 0; text-align: left; }
+  .panel td::before { content: none !important; }
+  .panel td .sub { text-align: left; }
+  /* раскладка ячеек */
+  .panel td[data-label="Рейтинг"] { grid-column: 1; grid-row: 1 / span 2; padding-top: 2px; }
+  .panel td[data-label="Компания"] { grid-column: 2; grid-row: 1; }
+  .panel td[data-label="Регион"] { grid-column: 2; grid-row: 2; color: var(--muted); font-size: 14px; }
+  .panel td[data-label="Руководитель"] { grid-column: 1 / -1; grid-row: 3; margin-top: 8px; font-size: 14px; }
+  .panel td[data-label="Контакты"] { grid-column: 1 / -1; grid-row: 4; margin-top: 6px; line-height: 1.6; }
+  .panel td[data-label="Реестр"] { grid-column: 1; grid-row: 5; margin-top: 10px; }
+  .panel td[data-label=""] { grid-column: 2; grid-row: 5; margin-top: 10px; text-align: right; }
+  .panel td[data-label="Регион"] .sub { display: inline; }
+  .panel td[data-label="Регион"] .sub::before { content: " · "; }
+  .panel .rate { gap: 6px; flex-direction: column; align-items: center; }
+  .panel .co { font-size: 16px; }
   .more { flex-direction: column; align-items: stretch; gap: 8px; }
   .more-info { text-align: center; }
 
@@ -330,12 +350,13 @@ td .sub { color: var(--muted); font-size: 14px; }
   .f-row { grid-template-columns: 92px 1fr 40px 66px; gap: 8px; }
   .f-name { font-size: 14px; }
 
-  /* Карточка сделки и модалки — на весь экран */
+  /* Панели на весь экран */
   .drawer { width: 100vw; max-width: 100vw; }
+  .dr-head { padding: 16px 16px; }
+  .dr-body { padding: 16px 16px 24px; }
+  .dr-title { font-size: 18px; }
   .login-card { padding: 24px 20px; }
   .info { grid-template-columns: 1fr; }
-  .toolbar .top-toggle { flex-basis: 100%; }
-  .dr-title { font-size: 18px; }
   .user-row { gap: 6px; }
   .user-row .btn-sm { padding: 6px 9px; font-size: 12px; }
   .file-meta { font-size: 11px; }
